@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ChessTest {
-    @DisplayName("Bounds Check - rook in the middle")
+    @DisplayName("Bounds check - rook in the middle")
     @Test
     void possiblePositionsEdgeCase() {
         int n = 10;
@@ -21,7 +21,7 @@ class ChessTest {
         assertEquals(Main.PieceTypes.PossibleMove, board[9][4]);
     }
 
-    @DisplayName("Bounds Check - rook in the corner")
+    @DisplayName("Bounds check - rook in the corner")
     @Test
     void possiblePositionsEdgeCase2() {
         int n = 10;
@@ -34,10 +34,9 @@ class ChessTest {
         assertEquals(Main.PieceTypes.PossibleMove, board[0][9]);
     }
 
-
-    @DisplayName("Bounds Check - rook in the corner")
+    @DisplayName("2 rooks in the same line - possible moves should overlap")
     @Test
-    void possiblePositionsEdgeCase3() {
+    void rooksInTheSameLine() {
         int n = 10;
         Main.PieceTypes[][] board = Main.makeBoard(n);
 
@@ -48,5 +47,19 @@ class ChessTest {
         Main.setPossiblePositions(board, rooks);
 
         assertEquals(Main.PieceTypes.PossibleMove, board[5][3]);
+    }
+
+    @DisplayName("Pieces should act as obstacles")
+    @Test
+    void pieceAsObstacle() {
+        int n = 10;
+        Main.PieceTypes[][] board = Main.makeBoard(n);
+        Main.Point rook = new Main.Point(4, 4);
+        board[6][4] = Main.PieceTypes.Piece;
+
+        Main.setPossiblePositions(board, rook);
+
+        assertEquals(Main.PieceTypes.PossibleMove, board[5][4]);
+        assertEquals(Main.PieceTypes.Empty, board[7][4]);
     }
 }
